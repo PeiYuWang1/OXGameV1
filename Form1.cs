@@ -81,7 +81,7 @@ namespace OXGame
             {
                 MessageBox.Show(button3.Text, "Winner is...");
             }
-            else if (counter == 9)
+            else if (counter==9)
             {
                 // check if TIE ?
                 MessageBox.Show("ендт!", "Tie...");
