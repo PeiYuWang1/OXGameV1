@@ -1,6 +1,6 @@
 # OXGameLab
-## test
-onjkjk\
+## Introduction
+This is a simple OXGame!
 
 ### hhh
 
