@@ -94,6 +94,6 @@ namespace OXGameV1
             return gameMarkers[x, y];
         }
 
-        // 其他遊戲相關的方法...
+        // 其他遊戲方法...
     }
 }
