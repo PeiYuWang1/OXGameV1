@@ -6,90 +6,94 @@ using System.Threading.Tasks;
 
 namespace OXGameV1
 {
-    internal class OXGameEngine
+    public class OXGameEngine
     {
-        // 二維字元陣列來紀錄玩家的下子
-        private char[,] board;
+        private char[,] gameMarkers;
 
-        // 建構子，初始化遊戲盤面
         public OXGameEngine()
         {
-            board = new char[3, 3]
-            {
-                { ' ', ' ', ' ' },
-                { ' ', ' ', ' ' },
-                { ' ', ' ', ' ' }
-            };
+            gameMarkers = new char[3, 3];
+            ResetGame();
         }
 
-        // (a) 設定玩家的 Marker
         public void SetMarker(int x, int y, char player)
         {
             if (IsValidMove(x, y))
             {
-                board[x, y] = player;
+                gameMarkers[x, y] = player;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid move!");
             }
         }
 
-        // (b) 重置遊戲
         public void ResetGame()
         {
-            board = new char[3, 3]
-            {
-            { ' ', ' ', ' ' },
-            { ' ', ' ', ' ' },
-            { ' ', ' ', ' ' }
-            };
-        }
-
-        // (c) 判斷是否有贏家
-        public char IsWinner()
-        {
-            // 檢查橫排、直排及對角線
+            gameMarkers = new char[3, 3];
             for (int i = 0; i < 3; i++)
             {
-                // 檢查橫排
-                if (board[i, 0] == board[i, 1] && board[i, 1] == board[i, 2] && board[i, 0] != ' ')
-                    return board[i, 0];
-                // 檢查直排
-                if (board[0, i] == board[1, i] && board[1, i] == board[2, i] && board[0, i] != ' ')
-                    return board[0, i];
+                for (int j = 0; j < 3; j++)
+                {
+                    gameMarkers[i, j] = ' ';
+                }
+            }
+        }
+
+        public char IsWinner()
+        {
+            // 檢查橫向
+            for (int i = 0; i < 3; i++)
+            {
+                if (gameMarkers[i, 0] != ' ' && gameMarkers[i, 0] == gameMarkers[i, 1] && gameMarkers[i, 1] == gameMarkers[i, 2])
+                {
+                    return gameMarkers[i, 0];
+                }
+            }
+
+            // 檢查縱向
+            for (int j = 0; j < 3; j++)
+            {
+                if (gameMarkers[0, j] != ' ' && gameMarkers[0, j] == gameMarkers[1, j] && gameMarkers[1, j] == gameMarkers[2, j])
+                {
+                    return gameMarkers[0, j];
+                }
             }
 
             // 檢查對角線
-            if (board[0, 0] == board[1, 1] && board[1, 1] == board[2, 2] && board[0, 0] != ' ')
-                return board[0, 0];
-            if (board[0, 2] == board[1, 1] && board[1, 1] == board[2, 0] && board[0, 2] != ' ')
-                return board[0, 2];
-
-            // 若無贏家，回傳空白字元
-            return ' ';
-        }
-
-        // (d) 取得指定位置的 Marker
-        public char GetMarker(int x, int y)
-        {
-            if (x >= 0 && x < 3 && y >= 0 && y < 3)
+            if (gameMarkers[0, 0] != ' ' && gameMarkers[0, 0] == gameMarkers[1, 1] && gameMarkers[1, 1] == gameMarkers[2, 2])
             {
-                return board[x, y];
+                return gameMarkers[0, 0];
             }
-            return ' '; // 若索引不合法則回傳空白字元
-        }
 
-        // (e) 判斷指定位置是否還未下子
-        public bool IsEmpty(int x, int y)
-        {
-            if (x >= 0 && x < 3 && y >= 0 && y < 3)
+            if (gameMarkers[0, 2] != ' ' && gameMarkers[0, 2] == gameMarkers[1, 1] && gameMarkers[1, 1] == gameMarkers[2, 0])
             {
-                return board[x, y] == ' ';
+                return gameMarkers[0, 2];
             }
-            return false;
+
+            return ' '; // 沒有贏家出現
         }
 
-        // (f) 判斷指定位置是否是有效的下子位置
         public bool IsValidMove(int x, int y)
         {
-            return x >= 0 && x < 3 && y >= 0 && y < 3 && IsEmpty(x, y);
+            if (x < 0 || x >= 3 || y < 0 || y >= 3)
+            {
+                return false;
+            }
+
+            if (gameMarkers[x, y] != ' ')
+            {
+                return false;
+            }
+
+            return true;
         }
+
+        public char GetMarker(int x, int y)
+        {
+            return gameMarkers[x, y];
+        }
+
+        // 其他遊戲相關的方法...
     }
 }
