@@ -24,17 +24,17 @@ namespace OXGame
         private void InitializeGame()
         {
             for (int i = 0; i < 3; i++)
-            { 
-                for (int j = 0; j < 3; j++) 
+            {
+                for (int j = 0; j < 3; j++)
                 {
                     Button button = new Button();
 
                     button.Font = new Font("Microsoft JhengHei UI", 32F, FontStyle.Regular, GraphicsUnit.Point);
                     button.Size = new Size(90, 90);
-                    button.Location = new Point(30 + i*100 , 30 + j*100);
+                    button.Location = new Point(30 + i * 100, 30 + j * 100);
                     button.Margin = new Padding(2);
                     button.Name = "button" + i + j;  //
-                    button.TabIndex = i*3 + j + 1;   //
+                    button.TabIndex = i * 3 + j + 1;   //
                     button.UseVisualStyleBackColor = true;
                     button.Click += button1_Click;
 
@@ -43,8 +43,9 @@ namespace OXGame
 
                     this.Controls.Add(button);
 
-                    oxButtons[i,j] = button;
+                    oxButtons[i, j] = button;
                 }
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
